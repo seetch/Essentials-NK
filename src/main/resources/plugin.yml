@@ -1,0 +1,6 @@
+name: Essentials
+main: me.seetch.essentials.Essentials
+version: "${pom.version}"
+api: 1.0.13
+authors:
+  - "https://github.com/seetch"
