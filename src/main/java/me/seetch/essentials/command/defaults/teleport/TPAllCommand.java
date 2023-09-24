@@ -26,7 +26,7 @@ public class TPAllCommand extends CommandBase {
         } else if (args.length == 1) {
             player = api.getServer().getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(Format.MATERIAL_REDSTONE.colorize("Указанный игрок не найден."));
+                sender.sendMessage(Format.RED.colorize("", "Указанный игрок не найден."));
                 return false;
             }
         } else {
@@ -36,10 +36,10 @@ public class TPAllCommand extends CommandBase {
         for (Player p : api.getServer().getOnlinePlayers().values()) {
             if (p != player) {
                 p.teleport(player);
-                p.sendMessage(Format.YELLOW.colorize("Вы были телепортированы к %0.", player.getName()));
+                p.sendMessage(Format.YELLOW.colorize("", "Вы были телепортированы к %0.", player.getName()));
             }
         }
-        player.sendMessage(Format.MATERIAL_EMERALD.colorize("Вы успешно телепортировали всех к себе."));
+        player.sendMessage(Format.GREEN.colorize("", "Вы успешно телепортировали всех к себе."));
         return true;
     }
 }

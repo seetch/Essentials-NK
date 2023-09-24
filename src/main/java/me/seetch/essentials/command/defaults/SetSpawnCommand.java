@@ -2,6 +2,8 @@ package me.seetch.essentials.command.defaults;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.level.Level;
+import cn.nukkit.math.Vector3;
 import cn.nukkit.utils.TextFormat;
 import me.seetch.essentials.EssentialsAPI;
 import me.seetch.essentials.command.CommandBase;
@@ -21,7 +23,7 @@ public class SetSpawnCommand extends CommandBase {
         }
 
         if (!this.testIngame(sender)) {
-            sender.sendMessage(Format.MATERIAL_REDSTONE.colorize("Эта команда должна быть выполнена в игре."));
+            sender.sendMessage(Format.RED.colorize("", "Эта команда должна быть выполнена в игре."));
             return false;
         }
 
@@ -31,10 +33,11 @@ public class SetSpawnCommand extends CommandBase {
         }
 
         Player p = (Player) sender;
-        getAPI().getServer().setDefaultLevel(p.getLevel());
-        p.getLevel().setSpawnLocation(p);
+        Level world = p.getLevel();
+        getAPI().getServer().setDefaultLevel(world);
+        world.setSpawnLocation((Vector3) p.getPosition().round());
 
-        p.sendMessage(Format.YELLOW.colorize("Спавн сервера установлен."));
+        p.sendMessage(Format.YELLOW.colorize("", "Спавн сервера установлен."));
         getAPI().getLogger().info(TextFormat.YELLOW + "Спавн сервера установлена на " + TextFormat.AQUA + p.getLevel().getName() + TextFormat.YELLOW + " игроком " + TextFormat.GREEN + p.getName());
         return true;
     }

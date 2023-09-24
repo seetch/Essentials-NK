@@ -10,7 +10,7 @@ import me.seetch.format.Format;
 public class SpawnCommand extends CommandBase {
 
     public SpawnCommand(EssentialsAPI api) {
-        super("spawn", "§r§qТелепортирует Вас на спавн.", api);
+        super("spawn", "§r§dТелепортирует Вас на спавн.", api);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class SpawnCommand extends CommandBase {
         }
 
         if (args.length == 0 && !this.testIngame(sender)) {
-            sender.sendMessage(Format.MATERIAL_REDSTONE.colorize("Эта команда должна быть выполнена в игре."));
+            sender.sendMessage(Format.RED.colorize("", "Эта команда должна быть выполнена в игре."));
             return false;
         }
 
@@ -44,12 +44,12 @@ public class SpawnCommand extends CommandBase {
         }
 
         if (p == null || !p.isOnline()) {
-            sender.sendMessage(Format.MATERIAL_REDSTONE.colorize("Указанный игрок не найден."));
+            sender.sendMessage(Format.RED.colorize("", "Указанный игрок не найден."));
             return false;
         }
 
-        p.teleport(getAPI().getServer().getDefaultLevel().getSpawnLocation());
-        p.sendMessage(Format.MATERIAL_EMERALD.colorize("Вы были телепортированы на %0.", "спавн"));
+        p.teleport(getAPI().getServer().getDefaultLevel().getFuzzySpawnLocation());
+        p.sendMessage(Format.GREEN.colorize("", "Вы были телепортированы на %0.", "спавн"));
         return true;
     }
 }

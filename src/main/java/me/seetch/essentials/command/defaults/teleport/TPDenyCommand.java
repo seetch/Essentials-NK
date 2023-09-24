@@ -2,6 +2,8 @@ package me.seetch.essentials.command.defaults.teleport;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.command.data.CommandParamType;
+import cn.nukkit.command.data.CommandParameter;
 import me.seetch.essentials.EssentialsAPI;
 import me.seetch.essentials.command.CommandBase;
 import me.seetch.essentials.util.TPRequest;
@@ -10,7 +12,9 @@ import me.seetch.format.Format;
 public class TPDenyCommand extends CommandBase {
 
     public TPDenyCommand(EssentialsAPI api) {
-        super("tpdeny", "§r§qОтклоняет запрос на телепортацию.", api);
+        super("tpdeny", "§r§dОтклоняет запрос на телепортацию.", api);
+        this.commandParameters.clear();
+        this.commandParameters.put("default", new CommandParameter[]{CommandParameter.newType("player", true, CommandParamType.TARGET)});
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {
@@ -27,7 +31,7 @@ public class TPDenyCommand extends CommandBase {
         }
         Player to = (Player) sender;
         if (api.getLatestTPRequestTo(to) == null) {
-            sender.sendMessage(Format.MATERIAL_REDSTONE.colorize("У Вас нет запросов на телепортацию."));
+            sender.sendMessage(Format.RED.colorize("", "У Вас нет запросов на телепортацию."));
             return false;
         }
         TPRequest request;
@@ -35,7 +39,7 @@ public class TPDenyCommand extends CommandBase {
         switch (args.length) {
             case 0 -> {
                 if ((request = api.getLatestTPRequestTo(to)) == null) {
-                    sender.sendMessage(Format.MATERIAL_REDSTONE.colorize("Запрос на телепортацию недоступен."));
+                    sender.sendMessage(Format.RED.colorize("", "Запрос на телепортацию недоступен."));
                     return false;
                 }
                 from = request.from();
@@ -43,11 +47,11 @@ public class TPDenyCommand extends CommandBase {
             case 1 -> {
                 from = api.getServer().getPlayer(args[0]);
                 if (from == null) {
-                    sender.sendMessage(Format.MATERIAL_REDSTONE.colorize("Указанный игрок не найден."));
+                    sender.sendMessage(Format.RED.colorize("", "Указанный игрок не найден."));
                     return false;
                 }
                 if ((request = api.getTPRequestBetween(from, to)) != null) {
-                    sender.sendMessage(Format.MATERIAL_REDSTONE.colorize("У Вас нет запросов на телепортацию от %0.", from.getName()));
+                    sender.sendMessage(Format.RED.colorize("", "У Вас нет запросов на телепортацию от %0.", from.getName()));
                     return false;
                 }
             }
@@ -55,8 +59,8 @@ public class TPDenyCommand extends CommandBase {
                 return false;
             }
         }
-        from.sendMessage(Format.MATERIAL_EMERALD.colorize("Игрок %0 отклонил Ваш запрос на телепортацию.", to.getName()));
-        sender.sendMessage(Format.MATERIAL_EMERALD.colorize("Вы отклонили запрос на телепортацию от %0.", from.getName()));
+        from.sendMessage(Format.AQUA.colorize("\uE110", "Игрок %0 отклонил Ваш запрос на телепортацию.", to.getName()));
+        sender.sendMessage(Format.AQUA.colorize("\uE110", "Вы отклонили запрос на телепортацию от %0.", from.getName()));
         api.removeTPRequestBetween(from, to);
         return true;
     }

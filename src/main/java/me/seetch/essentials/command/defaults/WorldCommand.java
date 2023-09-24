@@ -25,17 +25,17 @@ public class WorldCommand extends CommandBase {
             return false;
         }
         if (!api.getServer().isLevelGenerated(args[0])) {
-            sender.sendMessage(Format.MATERIAL_REDSTONE.colorize("Мир %0 не найден.", args[0]));
+            sender.sendMessage(Format.RED.colorize("", "Мир %0 не найден.", args[0]));
             return false;
         } else if (!api.getServer().isLevelLoaded(args[0])) {
-            sender.sendMessage(Format.YELLOW.colorize("Мир еще не загружен. %0", "Загрузка..."));
+            sender.sendMessage(Format.YELLOW.colorize("", "Мир еще не загружен. %0", "Загрузка..."));
             if (!api.getServer().loadLevel(args[0])) {
-                sender.sendMessage(Format.MATERIAL_REDSTONE.colorize("Не удалось загрузить мир."));
+                sender.sendMessage(Format.RED.colorize("", "Не удалось загрузить мир."));
                 return false;
             }
         }
         ((Player) sender).teleport(api.getServer().getLevelByName(args[0]).getSpawnLocation());
-        sender.sendMessage(Format.MATERIAL_EMERALD.colorize("Вы были телепортированы в мир %0.", args[0]));
+        sender.sendMessage(Format.GREEN.colorize("", "Вы были телепортированы в мир %0.", args[0]));
         return true;
     }
 }
